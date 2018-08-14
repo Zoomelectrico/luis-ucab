@@ -1,0 +1,58 @@
+<section class="hero">
+  <div class="hero-body">
+    <div class="container">
+      <h1 class="title">
+        Registrate
+      </h1>
+    </div>
+  </div>
+</section>
+<section class="section">
+  <div class="container">
+    <div class="columns is-mobile is-centered">
+      <div class="column is-one-third-tablet">
+        <form #signupform="ngForm" (submit)="signup()">
+          <div class="field">
+            <p class="control has-icons-left">
+              <input class="input" type="text" placeholder="Nombre" [(ngModel)]="name" [ngModelOptions]="{standalone: true}">
+              <span class="icon is-small is-left">
+                <i class="fas fa-user"></i>
+              </span>
+            </p>
+          </div>
+          <div class="field">
+            <p class="control has-icons-left">
+              <input class="input" type="text" placeholder="cedula" [(ngModel)]="id" [ngModelOptions]="{standalone: true}">
+              <span class="icon is-small is-left">
+                <i class="fas fa-address-card"></i>
+              </span>
+            </p>
+          </div>
+          <div class="field">
+            <p class="control has-icons-left has-icons-right">
+              <input class="input" type="email" placeholder="Email" [(ngModel)]="email" [ngModelOptions]="{standalone: true}">
+              <span class="icon is-small is-left">
+                <i class="fas fa-envelope"></i>
+              </span>
+            </p>
+          </div>
+          <div class="field">
+            <p class="control has-icons-left">
+              <input class="input" type="password" placeholder="Password" [(ngModel)]="password" [ngModelOptions]="{standalone: true}">
+              <span class="icon is-small is-left">
+                <i class="fas fa-lock"></i>
+              </span>
+            </p>
+          </div>
+          <div class="field">
+            <p class="control">
+              <button class="button is-success" type="submit">
+                Registrarme
+              </button>
+            </p>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>

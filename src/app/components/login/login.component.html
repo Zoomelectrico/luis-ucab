@@ -1,0 +1,36 @@
+<section class="section">
+  <div class="container">
+    <div class="columns is-mobile is-centered">
+      <div class="column is-one-third-tablet">
+        <form #loginform="ngForm" (submit)="login()">
+          <div class="has-text-centered">
+            <h2 class="is-size-2">Iniciar Sesion</h2>
+          </div>
+          <div class="field">
+            <p class="control has-icons-left">
+              <input class="input" type="email" placeholder="Email" [(ngModel)]="email" [ngModelOptions]="{standalone: true}">
+              <span class="icon is-small is-left">
+                <i class="fas fa-envelope"></i>
+              </span>
+            </p>
+          </div>
+          <div class="field">
+            <p class="control has-icons-left">
+              <input class="input" type="password" placeholder="Password" [(ngModel)]="password" [ngModelOptions]="{standalone: true}">
+              <span class="icon is-small is-left">
+                <i class="fas fa-lock"></i>
+              </span>
+            </p>
+          </div>
+          <div class="field">
+            <p class="control has-text-centered">
+              <button type="submit" class="button is-success has-text-centered">
+                Login
+              </button>
+            </p>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
