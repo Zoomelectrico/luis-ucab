@@ -1,9 +1,22 @@
 section {
-  background: #eeeeee;
+  min-height: 100vh;
+  background: linear-gradient(0deg, hsl(171, 100%, 41%), hsl(141, 71%, 48%));
 }
-.sidebar {
-  background: #ffffff;
+#sidebar {
+  color: white;
 }
-.content {
-  background: #ebedeb;
+.map {
+  width: 100%;
+  height: 80vh;
+}
+.center {
+  font-size: 2rem;
+  text-align: center;
+}
+.description {
+  text-align: center;
+  font-size: 0.85rem;
+  padding-bottom: 0.25rem;
+  border-bottom: 1px #ffffff solid;
+  margin-bottom: 1rem;
 }

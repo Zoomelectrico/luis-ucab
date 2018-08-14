@@ -1,0 +1,10 @@
+div.container {
+  display: flex;
+  flex-direction: column;
+}
+div.buttons {
+  margin: auto;
+}
+section.hero {
+  background: linear-gradient(0deg, hsl(171, 100%, 41%), hsl(141, 71%, 48%));
+}

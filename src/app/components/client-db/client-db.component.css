@@ -7,5 +7,16 @@ section {
 }
 .map {
   width: 100%;
-  height: auto;
+  height: 80vh;
+}
+.center {
+  font-size: 2rem;
+  text-align: center;
+}
+.description {
+  text-align: center;
+  font-size: 0.85rem;
+  padding-bottom: 0.25rem;
+  border-bottom: 1px #ffffff solid;
+  margin-bottom: 1rem;
 }
