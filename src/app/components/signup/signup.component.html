@@ -22,9 +22,9 @@
           </div>
           <div class="field">
             <p class="control has-icons-left">
-              <input class="input" type="text" placeholder="cedula" [(ngModel)]="id" [ngModelOptions]="{standalone: true}">
+              <input class="input" type="text" placeholder="telefono" [(ngModel)]="phone" [ngModelOptions]="{standalone: true}">
               <span class="icon is-small is-left">
-                <i class="fas fa-address-card"></i>
+                <i class="fas fa-phone"></i>
               </span>
             </p>
           </div>
@@ -45,9 +45,17 @@
             </p>
           </div>
           <div class="field">
-            <p class="control">
-              <button class="button is-success" type="submit">
-                Registrarme
+            <p class="control has-icons-left">
+              <input class="input" type="text" placeholder="direccion" [(ngModel)]="address" [ngModelOptions]="{standalone: true}">
+              <span class="icon is-small is-left">
+                <i class="fas fa-phone"></i>
+              </span>
+            </p>
+          </div>
+          <div class="field">
+            <p class="control has-text-centered">
+              <button type="submit" class="button is-success has-text-centered">
+                Login
               </button>
             </p>
           </div>

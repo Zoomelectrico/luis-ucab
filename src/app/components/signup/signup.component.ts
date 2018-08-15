@@ -10,7 +10,8 @@ import { Router } from "@angular/router";
 })
 export class SignupComponent implements OnInit {
   private name;
-  private id;
+  private phone;
+  private address;
   private email;
   private password;
 
@@ -23,7 +24,10 @@ export class SignupComponent implements OnInit {
   ngOnInit() {}
 
   async signup() {
-    if (this.name && this.id && this.email && this.password) {
+    const validate =
+      this.name && this.phone && this.email && this.password && this.address;
+
+    if (validate) {
       if (this.password.length < 6) {
         console.log("papi mayor a 6");
       }
@@ -34,9 +38,19 @@ export class SignupComponent implements OnInit {
         this.email,
         this.password
       );
-      const ref = this.db.object(`users/${uid}`);
-      await ref.update({ name: this.name, email: this.email, cedula: this.id });
-      this.router.navigate(["/login"]);
+      if (uid) {
+        const ref = this.db.object(`users/${uid}`);
+        await ref.update({
+          name: this.name,
+          email: this.email,
+          telefono: this.phone,
+          direccion: this.address,
+          tipo: "cliente"
+        });
+        this.router.navigate(["/login"]);
+      } else {
+        console.log("Ya estas registrado chigure");
+      }
     }
   }
 }

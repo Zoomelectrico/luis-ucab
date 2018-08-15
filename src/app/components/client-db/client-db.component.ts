@@ -1,5 +1,7 @@
 /// <reference types="googlemaps" />
 import { Component, OnInit, ViewChild } from "@angular/core";
+import { AngularFireAuth } from "angularfire2/auth";
+import { AngularFireDatabase } from "angularfire2/database";
 
 @Component({
   selector: "app-client-db",
@@ -10,8 +12,9 @@ export class ClientDBComponent implements OnInit {
   @ViewChild("gmap")
   private gmapElement: any;
   private map: google.maps.Map;
+  private user: object;
 
-  constructor() {}
+  constructor(private auth: AngularFireAuth, private db: AngularFireDatabase) {}
 
   ngOnInit() {
     const mapProp = {
@@ -20,5 +23,14 @@ export class ClientDBComponent implements OnInit {
       mapTypeId: google.maps.MapTypeId.ROADMAP
     };
     this.map = new google.maps.Map(this.gmapElement.nativeElement, mapProp);
+    this.auth.user.subscribe(async currentUser => {
+      let { uid } = currentUser;
+      let res = await this.db
+        .object(`users/${uid}`)
+        .valueChanges()
+        .subscribe(data => {
+          this.user = data;
+        });
+    });
   }
 }
