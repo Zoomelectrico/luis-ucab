@@ -1,5 +1,5 @@
 <section class="section">
-  <div class="columns">
+  <div class="columns" id="dashboard">
     <div class="column is-one-quarter has-background-dark" id="sidebar">
       <figure class="image is-128x128" style="margin: auto">
         <img class="is-rounded" src="https://bulma.io/images/placeholders/128x128.png">
@@ -14,7 +14,84 @@
       </div>
     </div>
     <div class="column is-three-quarters has-background-light">
-      <div #gmap class="map"></div>
+      <div class="tabs is-fullwidth is-centered">
+        <ul #lista>
+          <li class="is-active"><a id="0" #encomienda (click)="onclick(encomienda.id)">Nueva Encomienda</a></li>
+          <li><a id="1" #ubicacion (click)="onclick(ubicacion.id) ">Ubicacion</a></li>
+          <li><a id="2" #detalles (click)="onclick(detalles.id) ">Detalles</a></li>
+          <li><a id="3" #transporte (click)="onclick(transporte.id) ">Transporte</a></li>
+        </ul>
+      </div>
+      <div class="columns is-centered ">
+        <div *ngIf="ngifs[0]" class="column is-half-tablet ">
+          <form>
+            <div class="field ">
+              <label class="label ">Receptor</label>
+              <div class="control ">
+                <input class="input " type="text " placeholder="Text input ">
+              </div>
+            </div>
+            <div class="field ">
+              <label class="label ">Remitente</label>
+              <div class="control ">
+                <input class="input " type="text " placeholder="Text input ">
+              </div>
+            </div>
+            <button class="button is-primary ">Aceptar</button>
+          </form>
+        </div>
+        <div *ngIf="ngifs[1]" class="column is-half-tablet ">
+          <form>
+            <div class="field ">
+              <label class="label ">Receptor</label>
+              <div class="control ">
+                <input class="input " type="text " placeholder="Text input ">
+              </div>
+            </div>
+            <div class="field ">
+              <label class="label ">Remitente</label>
+              <div class="control ">
+                <input class="input " type="text " placeholder="Text input ">
+              </div>
+            </div>
+            <button class="button is-primary ">Aceptar</button>
+          </form>
+        </div>
+        <div *ngIf="ngifs[2]" class="column is-half-tablet ">
+          <form>
+            <div class="field ">
+              <label class="label ">Receptor</label>
+              <div class="control ">
+                <input class="input " type="text " placeholder="Text input ">
+              </div>
+            </div>
+            <div class="field ">
+              <label class="label ">Remitente</label>
+              <div class="control ">
+                <input class="input " type="text " placeholder="Text input ">
+              </div>
+            </div>
+            <button class="button is-primary ">Aceptar</button>
+          </form>
+        </div>
+        <div *ngIf="ngifs[3]" class="column is-half-tablet ">
+          <form>
+            <div class="field ">
+              <label class="label ">Receptor</label>
+              <div class="control ">
+                <input class="input " type="text " placeholder="Text input ">
+              </div>
+            </div>
+            <div class="field ">
+              <label class="label ">Remitente</label>
+              <div class="control ">
+                <input class="input " type="text " placeholder="Text input ">
+              </div>
+            </div>
+            <button class="button is-primary ">Aceptar</button>
+          </form>
+        </div>
+      </div>
     </div>
   </div>
 </section>

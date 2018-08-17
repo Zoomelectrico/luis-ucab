@@ -36,7 +36,7 @@ export class LoginComponent implements OnInit {
           .valueChanges()
           .subscribe(
             data => {
-              const { tipo } = data;
+              const tipo = data['tipo'];
               this.router.navigate([
                 `/${tipo === "cliente" ? "client" : "admin"}`
               ]);

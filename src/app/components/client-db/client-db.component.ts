@@ -25,7 +25,7 @@ export class ClientDBComponent implements OnInit {
     this.map = new google.maps.Map(this.gmapElement.nativeElement, mapProp);
     this.auth.user.subscribe(async currentUser => {
       let { uid } = currentUser;
-      let res = await this.db
+      this.db
         .object(`users/${uid}`)
         .valueChanges()
         .subscribe(data => {

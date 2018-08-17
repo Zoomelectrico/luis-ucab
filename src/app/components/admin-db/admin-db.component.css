@@ -2,8 +2,11 @@ section {
   min-height: 100vh;
   background: linear-gradient(0deg, hsl(171, 100%, 41%), hsl(141, 71%, 48%));
 }
+#dashboard {
+  min-height: 80vh;
+}
 #sidebar {
-  color: white;
+  color: #ffffff;
 }
 .map {
   width: 100%;
