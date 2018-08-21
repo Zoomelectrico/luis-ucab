@@ -41,21 +41,16 @@
           </form>
         </div>
         <div *ngIf="ngifs[1]" class="column is-half-tablet ">
-          <form>
-            <div class="field ">
-              <label class="label ">Receptor</label>
-              <div class="control ">
-                <input class="input " type="text " placeholder="Text input ">
+          <form (submit)="search()">
+            <div class="field">
+              <label class="label">Identificador</label>
+              <div class="control">
+                <input class="input" type="text" placeholder="Tracking Code" [(ngModel)]="trackingCode" [ngModelOptions]="{standalone: true}">
               </div>
             </div>
-            <div class="field ">
-              <label class="label ">Remitente</label>
-              <div class="control ">
-                <input class="input " type="text " placeholder="Text input ">
-              </div>
-            </div>
-            <button class="button is-primary ">Aceptar</button>
+            <button class="button is-primary">Buscar</button>
           </form>
+          <div #gmap class="map"></div>
         </div>
         <div *ngIf="ngifs[2]" class="column is-half-tablet ">
           <form>
@@ -75,20 +70,15 @@
           </form>
         </div>
         <div *ngIf="ngifs[3]" class="column is-half-tablet ">
-          <form>
-            <div class="field ">
-              <label class="label ">Receptor</label>
-              <div class="control ">
-                <input class="input " type="text " placeholder="Text input ">
+          <form (submit)="transports()">
+            <div class="field">
+              <label class="label">Placa</label>
+              <div class="control">
+                <input class="input" type="text" placeholder="License Plate" [(ngModel)]="licensePlate" [ngModelOptions]="{standalone: true}">
               </div>
             </div>
-            <div class="field ">
-              <label class="label ">Remitente</label>
-              <div class="control ">
-                <input class="input " type="text " placeholder="Text input ">
-              </div>
-            </div>
-            <button class="button is-primary ">Aceptar</button>
+            <button class="button is-primary">Buscar</button>
+            <div #gmap class="map" class="is-hidden"></div>
           </form>
         </div>
       </div>
