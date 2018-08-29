@@ -17,7 +17,7 @@
         <h3>Encomiendas a Recibir</h3>
       </div>
       <div class="tags">
-        <span class="tag is-info" *ngFor="let e of recive" (click)="verEncomienda(e)">Encomienda {{e.trackingID}}</span>
+        <span class="tag is-info" *ngFor="let e of recive" (click)="verEncomienda(e)">{{e.trackingID}}</span>
       </div>
     </div>
     <div class="column is-three-quarters has-background-light">

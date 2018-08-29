@@ -11,14 +11,14 @@
       <div class="tabs is-fullwidth is-centered">
         <ul #lista>
           <li class="is-active"><a id="0" #encomienda (click)="onclick(encomienda.id)">Nueva Encomienda</a></li>
-          <li><a id="1" #ubicacion (click)="onclick(ubicacion.id) ">Ubicacion</a></li>
-          <li><a id="2" #detalles (click)="onclick(detalles.id) ">Detalles</a></li>
-          <li><a id="3" #transporte (click)="onclick(transporte.id) ">Transporte</a></li>
+          <li><a id="1" #ubicacion (click)="onclick(ubicacion.id)">Ubicacion</a></li>
+          <li><a id="2" #detalles (click)="onclick(detalles.id)">Detalles</a></li>
+          <li><a id="3" #transporte (click)="onclick(transporte.id)">Transporte</a></li>
         </ul>
       </div>
-      <div class="columns is-centered ">
-        <div *ngIf="ngifs[0]" class="column is-half-tablet ">
-          <form>
+      <div class="columns is-centered">
+        <div *ngIf="ngifs[0]" class="column is-half-tablet">
+          <form (submit)="newEncomienda(emisor.value, receptor.value)">
             <div class="field">
               <label class="label">Receptor</label>
               <div class="control">
@@ -31,49 +31,74 @@
                 <input class="input" type="text" placeholder="Cedula del Emisor" #receptor>
               </div>
             </div>
-            <button class="button is-primary" (click)="newEncomienda(emisor.value, receptor.value)">Aceptar</button>
+            <div>
+              <button class="button is-primary" style="margin: auto; display: flex;">Aceptar</button>
+              <p class="has-text-centered"><strong>{{message}}</strong></p>
+            </div>
           </form>
         </div>
-        <div *ngIf="ngifs[1]" class="column is-half-tablet ">
-          <form (submit)="search()">
-            <div class="field">
-              <label class="label">Identificador</label>
-              <div class="control">
-                <input class="input" type="text" placeholder="Tracking Code" [(ngModel)]="trackingCode" [ngModelOptions]="{standalone: true}">
+        <div *ngIf="ngifs[1]" class="column">
+          <div class="columns is-centered">
+            <div class="column">
+              <div class="columns is-centered">
+                <div class="column is-half-tablet">
+                  <form (submit)="search(tracking.value)">
+                    <div class="field">
+                      <label class="label">Identificador</label>
+                      <div class="control">
+                        <input class="input" type="text" placeholder="Tracking Code" #tracking>
+                      </div>
+                    </div>
+                    <div style="display: flex">
+                      <button style="margin: auto" class="button is-primary">Buscar</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+              <div class="columns is-centered">
+                <div class="column">
+                  <div #gmap class="map"></div>
+                </div>
               </div>
             </div>
-            <button class="button is-primary">Buscar</button>
-          </form>
-          <div #gmap class="map"></div>
+          </div>
         </div>
-        <div *ngIf="ngifs[2]" class="column is-half-tablet ">
+        <div *ngIf="ngifs[2]" class="column is-half-tablet">
           <form>
-            <div class="field ">
-              <label class="label ">Receptor</label>
-              <div class="control ">
-                <input class="input " type="text " placeholder="Text input ">
+            <div class="field">
+              <label class="label">Receptor</label>
+              <div class="control">
+                <input class="input" type="text" placeholder="Text input">
               </div>
             </div>
-            <div class="field ">
-              <label class="label ">Remitente</label>
-              <div class="control ">
-                <input class="input " type="text " placeholder="Text input ">
+            <div class="field">
+              <label class="label">Remitente</label>
+              <div class="control">
+                <input class="input" type="text" placeholder="Text input">
               </div>
             </div>
-            <button class="button is-primary ">Aceptar</button>
+            <button class="button is-primary">Aceptar</button>
           </form>
         </div>
-        <div *ngIf="ngifs[3]" class="column is-half-tablet ">
-          <form (submit)="transports()">
-            <div class="field">
-              <label class="label">Placa</label>
-              <div class="control">
-                <input class="input" type="text" placeholder="License Plate" [(ngModel)]="licensePlate" [ngModelOptions]="{standalone: true}">
-              </div>
-            </div>
-            <button class="button is-primary">Buscar</button>
-            <div #gmap class="map" class="is-hidden"></div>
-          </form>
+        <div *ngIf="ngifs[3]" class="column">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Placa</th>
+                <th>Latitud</th>
+                <th>Longitud</th>
+                <th>Ver</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let t of transport">
+                <td>{{t.placa}}</td>
+                <td>{{t.lat}}</td>
+                <td>{{t.lon}}</td>
+                <td><button class="button is-primary" (click)="verTransporte(t)">Click</button></td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>

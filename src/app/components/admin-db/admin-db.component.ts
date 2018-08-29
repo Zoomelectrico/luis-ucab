@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
-import { AngularFireDatabase } from "angularfire2/database";
+import { AngularFireDatabase, snapshotChanges } from "angularfire2/database";
 import { Observable } from "rxjs";
 
 @Component({
@@ -14,17 +14,27 @@ export class AdminDBComponent implements OnInit {
   private gmapElement: any;
   private map: google.maps.Map;
   private ngifs = [true, false, false, false];
-  private trackingCode;
   private licensePlate;
-  private mapProp = {
-    center: new google.maps.LatLng(18.5793, 73.8143),
-    zoom: 15,
-    mapTypeId: google.maps.MapTypeId.ROADMAP
-  };
+  private transport: Array<Object> = [];
+  private message: string = "";
 
   constructor(private db: AngularFireDatabase) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.db
+      .list("transportes")
+      .snapshotChanges()
+      .subscribe(snapshot => {
+        snapshot.forEach(data => {
+          const t = {
+            ...data.payload.val(),
+            placa: data.key
+          };
+          this.transport = [...this.transport, t];
+          console.table(this.transport);
+        });
+      });
+  }
 
   onclick(i) {
     const listItems = this.lista.nativeElement.childNodes;
@@ -36,15 +46,19 @@ export class AdminDBComponent implements OnInit {
     this.ngifs[i] = true;
   }
 
-  search() {
-    this.map = new google.maps.Map(
-      this.gmapElement.nativeElement,
-      this.mapProp
-    );
+  search(trackingCode) {
     this.db
-      .object(`encomiendas/${this.trackingCode}`)
+      .object(`encomiendas/${trackingCode}`)
       .valueChanges()
       .subscribe(data => {
+        this.map = new google.maps.Map(this.gmapElement.nativeElement, {
+          center: new google.maps.LatLng(
+            data["lugarParticular"].lat,
+            data["lugarParticular"].lon
+          ),
+          zoom: 15,
+          mapTypeId: google.maps.MapTypeId.ROADMAP
+        });
         console.log(data);
       });
   }
@@ -72,6 +86,7 @@ export class AdminDBComponent implements OnInit {
             };
             const key = this.db.list("encomiendas").push(encomienda).key;
             this.db.object(`encomiendas/${key}`).update({ trackingID: key });
+            this.message = `Codigo de Tracking ${key}`;
           }
         });
       });
