@@ -6,12 +6,6 @@
       </figure>
       <h3 class="center">Jose Quevedo</h3>
       <p class="center description">Administrador</p>
-      <div class="tags">
-        <span class="tag is-info">Pedido 1</span>
-        <span class="tag is-info">Pedido 2</span>
-        <span class="tag is-info">Pedido 3</span>
-        <span class="tag is-info">Pedido 4</span>
-      </div>
     </div>
     <div class="column is-three-quarters has-background-light">
       <div class="tabs is-fullwidth is-centered">
@@ -25,19 +19,19 @@
       <div class="columns is-centered ">
         <div *ngIf="ngifs[0]" class="column is-half-tablet ">
           <form>
-            <div class="field ">
-              <label class="label ">Receptor</label>
-              <div class="control ">
-                <input class="input " type="text " placeholder="Text input ">
+            <div class="field">
+              <label class="label">Receptor</label>
+              <div class="control">
+                <input class="input" type="text" placeholder="Cedula del receptor" #emisor>
               </div>
             </div>
-            <div class="field ">
-              <label class="label ">Remitente</label>
-              <div class="control ">
-                <input class="input " type="text " placeholder="Text input ">
+            <div class="field">
+              <label class="label">Remitente</label>
+              <div class="control">
+                <input class="input" type="text" placeholder="Cedula del Emisor" #receptor>
               </div>
             </div>
-            <button class="button is-primary ">Aceptar</button>
+            <button class="button is-primary" (click)="newEncomienda(emisor.value, receptor.value)">Aceptar</button>
           </form>
         </div>
         <div *ngIf="ngifs[1]" class="column is-half-tablet ">

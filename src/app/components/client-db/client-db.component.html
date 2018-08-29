@@ -10,20 +10,14 @@
         <h3>Encomiendas Emitidas</h3>
       </div>
       <div class="tags">
-        <span class="tag is-info">Pedido 1</span>
-        <span class="tag is-info">Pedido 2</span>
-        <span class="tag is-info">Pedido 3</span>
-        <span class="tag is-info">Pedido 4</span>
+        <span class="tag is-info" *ngFor="let e of send" (click)="verEncomienda(e)">{{e.trackingID}}</span>
       </div>
       <hr>
       <div class="has-text-centered">
         <h3>Encomiendas a Recibir</h3>
       </div>
       <div class="tags">
-        <span class="tag is-info">Pedido 1</span>
-        <span class="tag is-info">Pedido 2</span>
-        <span class="tag is-info">Pedido 3</span>
-        <span class="tag is-info">Pedido 4</span>
+        <span class="tag is-info" *ngFor="let e of recive" (click)="verEncomienda(e)">Encomienda {{e.trackingID}}</span>
       </div>
     </div>
     <div class="column is-three-quarters has-background-light">

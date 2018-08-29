@@ -14,6 +14,7 @@ export class SignupComponent implements OnInit {
   private address;
   private email;
   private password;
+  private cedula;
 
   constructor(
     private auth: AngularFireAuth,
@@ -45,6 +46,7 @@ export class SignupComponent implements OnInit {
           email: this.email,
           telefono: this.phone,
           direccion: this.address,
+          cedula: this.cedula,
           tipo: "cliente"
         });
         this.router.navigate(["/login"]);

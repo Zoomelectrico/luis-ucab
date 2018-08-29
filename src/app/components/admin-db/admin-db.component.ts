@@ -48,4 +48,32 @@ export class AdminDBComponent implements OnInit {
         console.log(data);
       });
   }
+
+  newEncomienda(emisor, receptor) {
+    this.db
+      .list("users")
+      .snapshotChanges()
+      .subscribe(snapshot => {
+        let rep = "";
+        let emi = "";
+        snapshot.forEach((x, i) => {
+          if (x.payload.val()["cedula"] == receptor) {
+            rep = x.key;
+          } else if (x.payload.val()["cedula"] == emisor) {
+            emi = x.key;
+          }
+          if (i === snapshot.length - 1) {
+            const encomienda = {
+              fechaRecepcion: new Date().toUTCString(),
+              remitente: emi,
+              receptor: rep,
+              status: 1,
+              trackingID: ""
+            };
+            const key = this.db.list("encomiendas").push(encomienda).key;
+            this.db.object(`encomiendas/${key}`).update({ trackingID: key });
+          }
+        });
+      });
+  }
 }
