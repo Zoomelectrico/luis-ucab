@@ -83,9 +83,34 @@ export class ClientDBComponent implements OnInit {
   }
 
   verEncomienda(e) {
-    this.map.setCenter(
-      new google.maps.LatLng(e.lugarParticular.lat, e.lugarParticular.lon)
-    );
-    console.log(e);
+    this.db
+      .object(`ubicacionGPS/${e.trackingID}`)
+      .valueChanges()
+      .subscribe((encomienda: any) => {
+        let {
+          lugar: { lat, lon }
+        } = encomienda;
+        lat = this.translateToDecimal(lat);
+        lon = this.translateToDecimal(lon) * -1;
+        this.map.setCenter(new google.maps.LatLng(lat, lon));
+      });
+  }
+
+  private translateToDecimal(coordenada: string): number {
+    const cor: string = coordenada
+      .split("g")
+      .join("-")
+      .split("m")
+      .join("-")
+      .split("s")
+      .join("-")
+      .split("mili")
+      .join("-");
+    const corArray: Array<string> = cor.split("-");
+    const total: number =
+      parseFloat(corArray[0]) +
+      parseFloat(corArray[1]) / 60 +
+      parseFloat(corArray[2]) / 3600;
+    return total;
   }
 }

@@ -1,6 +1,5 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
-import { NgForm, NgModel } from "@angular/forms";
 import { AngularFireAuth } from "angularfire2/auth";
 import { AngularFireDatabase } from "angularfire2/database";
 
@@ -36,7 +35,7 @@ export class LoginComponent implements OnInit {
           .valueChanges()
           .subscribe(
             data => {
-              const tipo = data['tipo'];
+              const tipo = data["tipo"];
               this.router.navigate([
                 `/${tipo === "cliente" ? "client" : "admin"}`
               ]);

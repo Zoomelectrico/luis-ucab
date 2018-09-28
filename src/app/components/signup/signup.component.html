@@ -24,7 +24,8 @@
             <p class="control has-icons-left">
               <input class="input" type="text" placeholder="cedula" [(ngModel)]="cedula" [ngModelOptions]="{standalone: true}">
               <span class="icon is-small is-left">
-                <i class="fas fa-phone"></i>
+                <i class="far fa-address-card"></i>
+
               </span>
             </p>
           </div>
@@ -56,14 +57,17 @@
             <p class="control has-icons-left">
               <input class="input" type="text" placeholder="direccion" [(ngModel)]="address" [ngModelOptions]="{standalone: true}">
               <span class="icon is-small is-left">
-                <i class="fas fa-phone"></i>
+                <i class="fas fa-home"></i>
               </span>
             </p>
           </div>
           <div class="field">
+            <p class="has-text-centered"><strong>{{message}}</strong></p>
+          </div>
+          <div class="field">
             <p class="control has-text-centered">
               <button type="submit" class="button is-success has-text-centered">
-                Login
+                Registrar
               </button>
             </p>
           </div>

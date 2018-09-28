@@ -12,7 +12,7 @@
         <ul #lista>
           <li class="is-active"><a id="0" #encomienda (click)="onclick(encomienda.id)">Nueva Encomienda</a></li>
           <li><a id="1" #ubicacion (click)="onclick(ubicacion.id)">Ubicacion</a></li>
-          <li><a id="2" #detalles (click)="onclick(detalles.id)">Detalles</a></li>
+          <li><a id="2" #detalles (click)="onclick(detalles.id)">Despachar</a></li>
           <li><a id="3" #transporte (click)="onclick(transporte.id)">Transporte</a></li>
         </ul>
       </div>
@@ -50,7 +50,8 @@
                       </div>
                     </div>
                     <div style="display: flex">
-                      <button style="margin: auto" class="button is-primary">Buscar</button>
+                      <button class="button is-primary" style="margin: auto; display: flex;">Buscar</button>
+                      <p class="has-text-centered"><strong>{{message}}</strong></p>
                     </div>
                   </form>
                 </div>
@@ -63,39 +64,56 @@
             </div>
           </div>
         </div>
-        <div *ngIf="ngifs[2]" class="column is-half-tablet">
-          <form>
-            <div class="field">
-              <label class="label">Receptor</label>
-              <div class="control">
-                <input class="input" type="text" placeholder="Text input">
+        <div *ngIf="ngifs[2]" class="column">
+          <div class="columns is-desktop">
+            <div class="column">
+              <div style="display: flex; margin-bottom: 0.75rem">
+                <strong style="margin: auto; flex: 1">Seleccione un Camion</strong>
+                <div class="control has-icons-left" style="margin: auto; flex: 2">
+                  <div class="select">
+                    <select #selectPlaca>
+                      <option selected>Placa</option>
+                      <option *ngFor="let t of transport" [value]="t.placa">{{t.placa}}</option>
+                    </select>
+                  </div>
+                  <span class="icon is-left">
+                    <i class="fas fa-globe"></i>
+                  </span>
+                </div>
               </div>
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th class="center-text">ID</th>
+                    <th class="center-text">Cargar</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let e of encomiendas">
+                    <td class="center-text">{{e.key}}</td>
+                    <td class="center-text"><button class="button is-primary" (click)="despachar(e)">Cargar</button></td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
-            <div class="field">
-              <label class="label">Remitente</label>
-              <div class="control">
-                <input class="input" type="text" placeholder="Text input">
-              </div>
-            </div>
-            <button class="button is-primary">Aceptar</button>
-          </form>
+          </div>
         </div>
         <div *ngIf="ngifs[3]" class="column">
           <table class="table">
             <thead>
               <tr>
-                <th>Placa</th>
-                <th>Latitud</th>
-                <th>Longitud</th>
-                <th>Ver</th>
+                <th class="center-text">Placa</th>
+                <th class="center-text">Latitud</th>
+                <th class="center-text">Longitud</th>
+                <th class="center-text">Ver</th>
               </tr>
             </thead>
             <tbody>
               <tr *ngFor="let t of transport">
-                <td>{{t.placa}}</td>
-                <td>{{t.lat}}</td>
-                <td>{{t.lon}}</td>
-                <td><button class="button is-primary" (click)="verTransporte(t)">Click</button></td>
+                <td class="center-text">{{t.placa}}</td>
+                <td class="center-text">{{t.latS}}</td>
+                <td class="center-text">{{t.lonS}}</td>
+                <td class="center-text"><button class="button is-primary" (click)="verTransporte(t)">Click</button></td>
               </tr>
             </tbody>
           </table>
