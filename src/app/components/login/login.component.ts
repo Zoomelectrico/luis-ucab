@@ -9,13 +9,13 @@ import { AngularFireDatabase } from "angularfire2/database";
   styleUrls: ["./login.component.css"]
 })
 export class LoginComponent implements OnInit {
-  private email;
-  private password;
+  public email;
+  public password;
 
   constructor(
-    private auth: AngularFireAuth,
-    private router: Router,
-    private db: AngularFireDatabase
+    public auth: AngularFireAuth,
+    public router: Router,
+    public db: AngularFireDatabase
   ) {}
 
   async login() {

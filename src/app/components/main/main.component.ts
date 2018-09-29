@@ -10,9 +10,9 @@ import { AngularFireDatabase } from "angularfire2/database";
 })
 export class MainComponent implements OnInit {
   constructor(
-    private auth: AngularFireAuth,
-    private db: AngularFireDatabase,
-    private router: Router
+    public auth: AngularFireAuth,
+    public db: AngularFireDatabase,
+    public router: Router
   ) {}
 
   ngOnInit() {

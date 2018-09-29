@@ -8,18 +8,18 @@ import { AngularFireDatabase } from "angularfire2/database";
 })
 export class AdminDBComponent implements OnInit {
   @ViewChild("lista")
-  private lista: any;
+  public lista: any;
   @ViewChild("gmap")
-  private gmapElement: any;
-  private select: any;
-  private map: google.maps.Map;
-  private ngifs = [true, false, false, false];
-  private licensePlate;
-  private encomiendas: Array<Object> = [];
-  private transport: Array<Object> = [];
-  private message: string = "";
+  public gmapElement: any;
+  public select: any;
+  public map: google.maps.Map;
+  public ngifs = [true, false, false, false];
+  public licensePlate;
+  public encomiendas: Array<Object> = [];
+  public transport: Array<Object> = [];
+  public message: string = "";
 
-  constructor(private db: AngularFireDatabase) {}
+  constructor(public db: AngularFireDatabase) {}
 
   ngOnInit() {
     this.db
@@ -161,7 +161,7 @@ export class AdminDBComponent implements OnInit {
       });
   }
 
-  private translateToDecimal(coordenada: string): string {
+  public translateToDecimal(coordenada: string): string {
     const cor: string = coordenada
       .split("g")
       .join("-")

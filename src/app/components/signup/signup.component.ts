@@ -9,18 +9,18 @@ import { Router } from "@angular/router";
   styleUrls: ["./signup.component.css"]
 })
 export class SignupComponent implements OnInit {
-  private name;
-  private phone;
-  private address;
-  private email;
-  private password;
-  private cedula;
-  private message: string;
+  public name;
+  public phone;
+  public address;
+  public email;
+  public password;
+  public cedula;
+  public message: string;
 
   constructor(
-    private auth: AngularFireAuth,
-    private db: AngularFireDatabase,
-    private router: Router
+    public auth: AngularFireAuth,
+    public db: AngularFireDatabase,
+    public router: Router
   ) {}
 
   ngOnInit() {}

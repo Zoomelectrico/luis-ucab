@@ -10,13 +10,13 @@ import { AngularFireDatabase } from "angularfire2/database";
 })
 export class ClientDBComponent implements OnInit {
   @ViewChild("gmap")
-  private gmapElement: any;
-  private map: google.maps.Map;
-  private user: Object = {};
-  private send: Array<Object> = [];
-  private recive: Array<Object> = [];
+  public gmapElement: any;
+  public map: google.maps.Map;
+  public user: any = {};
+  public send: Array<Object> = [];
+  public recive: Array<Object> = [];
 
-  constructor(private auth: AngularFireAuth, private db: AngularFireDatabase) {}
+  constructor(public auth: AngularFireAuth, public db: AngularFireDatabase) {}
 
   ngOnInit() {
     let lat = 18.5793;
@@ -106,7 +106,7 @@ export class ClientDBComponent implements OnInit {
       });
   }
 
-  private translateToDecimal(coordenada: string): number {
+  public translateToDecimal(coordenada: string): number {
     const cor: string = coordenada
       .split("g")
       .join("-")
