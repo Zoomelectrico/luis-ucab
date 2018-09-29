@@ -2,7 +2,6 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
 import { AngularFireAuth } from "angularfire2/auth";
 import { AngularFireDatabase } from "angularfire2/database";
-import { Observable } from "rxjs";
 
 @Component({
   selector: "app-client-db",
@@ -37,6 +36,13 @@ export class ClientDBComponent implements OnInit {
             this.gmapElement.nativeElement,
             mapProp
           );
+          new google.maps.Marker({
+            position: new google.maps.LatLng(
+              pos.coords.latitude,
+              pos.coords.longitude
+            ),
+            map: this.map
+          });
         },
         err => {
           const mapProp = {
@@ -93,6 +99,10 @@ export class ClientDBComponent implements OnInit {
         lat = this.translateToDecimal(lat);
         lon = this.translateToDecimal(lon) * -1;
         this.map.setCenter(new google.maps.LatLng(lat, lon));
+        let marker = new google.maps.Marker({
+          position: new google.maps.LatLng(lat, lon),
+          map: this.map
+        });
       });
   }
 

@@ -11,6 +11,7 @@ export class AdminDBComponent implements OnInit {
   private lista: any;
   @ViewChild("gmap")
   private gmapElement: any;
+  private select: any;
   private map: google.maps.Map;
   private ngifs = [true, false, false, false];
   private licensePlate;
@@ -82,14 +83,24 @@ export class AdminDBComponent implements OnInit {
             zoom: 15,
             mapTypeId: google.maps.MapTypeId.ROADMAP
           });
+          let marker = new google.maps.Marker({
+            position: new google.maps.LatLng(
+              data["latitud"],
+              data["longitud"] * -1
+            ),
+            map: this.map
+          });
         } else {
           this.message = `Ese Identificar no se encuentra registrado`;
         }
       });
   }
 
-  despachar(e: any) {
-    console.log(e);
+  async despachar(e: any) {
+    await this.db.object(`ubicacionGPS/${e.key}`).update({
+      camion: this.select
+    });
+    this.encomiendas = this.encomiendas.filter(en => en["key"] != e.key);
   }
 
   newEncomienda(emisor, receptor) {
@@ -166,5 +177,23 @@ export class AdminDBComponent implements OnInit {
       parseFloat(corArray[1]) / 60 +
       parseFloat(corArray[2]) / 3600;
     return total.toFixed(4);
+  }
+
+  verTransporte(t: any) {
+    this.map = new google.maps.Map(this.gmapElement.nativeElement, {
+      center: new google.maps.LatLng(
+        parseFloat(t["latS"]),
+        parseFloat(t["lonS"])
+      ),
+      zoom: 15,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    });
+    let marker = new google.maps.Marker({
+      position: new google.maps.LatLng(
+        parseFloat(t["latS"]),
+        parseFloat(t["lonS"])
+      ),
+      map: this.map
+    });
   }
 }
