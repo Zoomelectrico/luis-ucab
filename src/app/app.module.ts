@@ -15,6 +15,7 @@ import { ClientDBComponent } from "./components/client-db/client-db.component";
 import { AdminDBComponent } from "./components/admin-db/admin-db.component";
 import { LoginComponent } from "./components/login/login.component";
 import { SignupComponent } from "./components/signup/signup.component";
+import { Error404Component } from './components/error404/error404.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { SignupComponent } from "./components/signup/signup.component";
     ClientDBComponent,
     AdminDBComponent,
     LoginComponent,
-    SignupComponent
+    SignupComponent,
+    Error404Component
   ],
   imports: [
     BrowserModule,

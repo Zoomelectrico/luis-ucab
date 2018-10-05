@@ -36,9 +36,15 @@ export class LoginComponent implements OnInit {
           .subscribe(
             data => {
               const tipo = data["tipo"];
-              this.router.navigate([
-                `/${tipo === "cliente" ? "client" : "admin"}`
-              ]);
+              let route = "";
+              if (tipo === "cliente") {
+                route = "/client";
+              } else if (tipo === "admin") {
+                route = "/admin";
+              } else {
+                route = "/404";
+              }
+              this.router.navigate([route]);
             },
             err => console.log(err)
           );
