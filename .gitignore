@@ -39,5 +39,3 @@ testem.log
 Thumbs.db
 
 /src/environments/environment.ts
-
-/src/assets/*.png
