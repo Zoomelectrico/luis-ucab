@@ -129,24 +129,6 @@
               <div #gmap class="map"></div>
             </div>
           </div>
-          <table class="table">
-            <thead>
-              <tr>
-                <th class="center-text">Placa</th>
-                <th class="center-text">Latitud</th>
-                <th class="center-text">Longitud</th>
-                <th class="center-text">Ver</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let t of transport">
-                <td class="center-text">{{t.placa}}</td>
-                <td class="center-text">{{t.latS}}</td>
-                <td class="center-text">{{t.lonS}}</td>
-                <td class="center-text"><button class="button is-primary" (click)="verTransporte(t)">Click</button></td>
-              </tr>
-            </tbody>
-          </table>
         </div>
       </div>
     </div>

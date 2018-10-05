@@ -46,12 +46,14 @@ export class AdminDBComponent implements OnInit {
             .snapshotChanges()
             .subscribe(data2 => {
               const payload = data2.payload.val();
-              if (payload["camion"] === "none") {
-                const e = {
-                  key: data.key,
-                  ...data2.payload.val()
-                };
-                this.encomiendas = [...this.encomiendas, e];
+              if (payload && payload["camion"]) {
+                if (payload["camion"] === "none") {
+                  const e = {
+                    key: data.key,
+                    ...data2.payload.val()
+                  };
+                  this.encomiendas = [...this.encomiendas, e];
+                }
               }
             });
         });
@@ -60,6 +62,7 @@ export class AdminDBComponent implements OnInit {
 
   onclick(i) {
     this.message = "";
+    this.map = null;
     const listItems = this.lista.nativeElement.childNodes;
     listItems.forEach(li => {
       li.classList = [];
@@ -73,20 +76,22 @@ export class AdminDBComponent implements OnInit {
     this.db
       .object(`ubicacionGPS/${trackingCode}`)
       .valueChanges()
-      .subscribe(data => {
+      .subscribe((data: any) => {
         if (data) {
+          let { latitud: lat, longitud: lon } = data;
+          if (lon > 0) {
+            lon = lon * - 1;
+          }
           this.map = new google.maps.Map(this.gmapElement.nativeElement, {
             center: new google.maps.LatLng(
-              data["latitud"],
-              data["longitud"] * -1
+              lat, lon
             ),
             zoom: 15,
             mapTypeId: google.maps.MapTypeId.ROADMAP
           });
           let marker = new google.maps.Marker({
             position: new google.maps.LatLng(
-              data["latitud"],
-              data["longitud"] * -1
+              lat, lon
             ),
             map: this.map
           });

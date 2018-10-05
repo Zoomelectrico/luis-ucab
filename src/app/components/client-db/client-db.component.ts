@@ -78,10 +78,12 @@ export class ClientDBComponent implements OnInit {
         .valueChanges()
         .subscribe(encomiendas => {
           encomiendas.forEach(encomienda => {
-            if (encomienda["remitente"] === uid) {
-              this.send = [...this.send, encomienda];
-            } else if (encomienda["receptor"] === uid) {
-              this.recive = [...this.recive, encomienda];
+            if (encomienda["status"] !== 1 || encomienda["status"] !== 5) {
+              if (encomienda["remitente"] === uid) {
+                this.send = [...this.send, encomienda];
+              } else if (encomienda["receptor"] === uid) {
+                this.recive = [...this.recive, encomienda];
+              }
             }
           });
         });
@@ -93,34 +95,43 @@ export class ClientDBComponent implements OnInit {
       .object(`ubicacionGPS/${e.trackingID}`)
       .valueChanges()
       .subscribe((encomienda: any) => {
-        let {
-          lugar: { lat, lon }
-        } = encomienda;
-        lat = this.translateToDecimal(lat);
-        lon = this.translateToDecimal(lon) * -1;
-        this.map.setCenter(new google.maps.LatLng(lat, lon));
-        let marker = new google.maps.Marker({
-          position: new google.maps.LatLng(lat, lon),
-          map: this.map
-        });
+        if (encomienda) {
+          let {
+            lugar: { lat, lon }
+          } = encomienda;
+          lat = this.translateToDecimal(lat);
+          lon = this.translateToDecimal(lon) * -1;
+          if (lon > 0) {
+            lon = lon * -1;
+          }
+          this.map.setCenter(new google.maps.LatLng(lat, lon));
+          let marker = new google.maps.Marker({
+            position: new google.maps.LatLng(lat, lon),
+            map: this.map
+          });
+        }
       });
   }
 
-  public translateToDecimal(coordenada: string): number {
-    const cor: string = coordenada
-      .split("g")
-      .join("-")
-      .split("m")
-      .join("-")
-      .split("s")
-      .join("-")
-      .split("mili")
-      .join("-");
-    const corArray: Array<string> = cor.split("-");
-    const total: number =
-      parseFloat(corArray[0]) +
-      parseFloat(corArray[1]) / 60 +
-      parseFloat(corArray[2]) / 3600;
-    return total;
+  public translateToDecimal(coordenada: any): number {
+    if (isNaN(coordenada)) {
+      const cor: string = coordenada
+        .split("g")
+        .join("-")
+        .split("m")
+        .join("-")
+        .split("s")
+        .join("-")
+        .split("mili")
+        .join("-");
+      const corArray: Array<string> = cor.split("-");
+      const total: number =
+        parseFloat(corArray[0]) +
+        parseFloat(corArray[1]) / 60 +
+        parseFloat(corArray[2]) / 3600;
+      return total;
+    } else {
+      return coordenada;
+    }
   }
 }
