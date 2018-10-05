@@ -21,5 +21,5 @@ section {
   margin-bottom: 1rem;
 }
 span.info:hover {
-  cursor: default;
+  cursor: pointer;
 }

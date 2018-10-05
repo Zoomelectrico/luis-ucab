@@ -100,7 +100,7 @@ export class ClientDBComponent implements OnInit {
             lugar: { lat, lon }
           } = encomienda;
           lat = this.translateToDecimal(lat);
-          lon = this.translateToDecimal(lon) * -1;
+          lon = this.translateToDecimal(lon);
           if (lon > 0) {
             lon = lon * -1;
           }
