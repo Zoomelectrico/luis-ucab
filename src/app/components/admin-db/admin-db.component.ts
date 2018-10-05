@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
 import { AngularFireDatabase } from "angularfire2/database";
+import { AngularFireAuth } from "angularfire2/auth";
 
 @Component({
   selector: "app-admin-db",
@@ -18,10 +19,23 @@ export class AdminDBComponent implements OnInit {
   public encomiendas: Array<Object> = [];
   public transport: Array<Object> = [];
   public message: string = "";
+  public user: Object = {};
 
-  constructor(public db: AngularFireDatabase) {}
+  constructor(public db: AngularFireDatabase, public auth: AngularFireAuth) {}
 
   ngOnInit() {
+    this.auth.user.subscribe(currentUser => {
+      if (currentUser) {
+        const { uid } = currentUser;
+        this.user = currentUser;
+        this.db
+          .object(`users/${uid}`)
+          .valueChanges()
+          .subscribe(data => {
+            this.user = data;
+          });
+      }
+    });
     this.db
       .list("transportes")
       .snapshotChanges()
@@ -80,19 +94,15 @@ export class AdminDBComponent implements OnInit {
         if (data) {
           let { latitud: lat, longitud: lon } = data;
           if (lon > 0) {
-            lon = lon * - 1;
+            lon = lon * -1;
           }
           this.map = new google.maps.Map(this.gmapElement.nativeElement, {
-            center: new google.maps.LatLng(
-              lat, lon
-            ),
+            center: new google.maps.LatLng(lat, lon),
             zoom: 15,
             mapTypeId: google.maps.MapTypeId.ROADMAP
           });
           let marker = new google.maps.Marker({
-            position: new google.maps.LatLng(
-              lat, lon
-            ),
+            position: new google.maps.LatLng(lat, lon),
             map: this.map
           });
         } else {
@@ -101,11 +111,39 @@ export class AdminDBComponent implements OnInit {
       });
   }
 
+  recibir(t: any) {
+    let ids = [];
+    const { placa } = t;
+    this.db
+      .list("ubicacionGPS")
+      .snapshotChanges()
+      .subscribe(snapshot => {
+        snapshot.forEach((snap: any, i: number) => {
+          const { key } = snap;
+          const { camion } = snap.payload.val();
+          if (camion == placa) {
+            this.db.object(`ubicacionGPS/${key}/camion`).set("none");
+            ids = [...ids, key];
+          }
+          if (i === snapshot.length - 1) {
+            this.message = `
+            Se han recibidos las siguientes encomiendas: \n 
+            ${ids.map(id => `${id}\n`)}
+            `;
+          }
+        });
+      });
+  }
+
   async despachar(e: any) {
-    await this.db.object(`ubicacionGPS/${e.key}`).update({
-      camion: this.select
-    });
-    this.encomiendas = this.encomiendas.filter(en => en["key"] != e.key);
+    if (this.select) {
+      await this.db.object(`ubicacionGPS/${e.key}`).update({
+        camion: this.select
+      });
+      this.encomiendas = this.encomiendas.filter(en => en["key"] != e.key);
+    } else {
+      this.message = "No se olvide de seleccionar un transporte";
+    }
   }
 
   newEncomienda(emisor, receptor) {
@@ -121,46 +159,50 @@ export class AdminDBComponent implements OnInit {
           } else if (x.payload.val()["cedula"] == emisor) {
             emi = x.key;
           }
-          if (i === snapshot.length - 1) {
-            const encomienda = {
-              fechaRecepcion: new Date().toUTCString(),
-              remitente: emi,
-              receptor: rep,
-              status: 0,
-              trackingID: ""
-            };
-            const key = this.db.list("encomiendas").push(encomienda).key;
-            this.db.object(`encomiendas/${key}`).update({ trackingID: key });
-            this.message = `Codigo de Tracking ${key}`;
-            let ubicacionGPS = {};
-            if (navigator.geolocation) {
-              navigator.geolocation.getCurrentPosition(pos => {
-                const {
-                  coords: { latitude: latitud, longitude: longitud }
-                } = pos;
+          if (rep != "" && emi != "") {
+            if (i === snapshot.length - 1) {
+              const encomienda = {
+                fechaRecepcion: new Date().toUTCString(),
+                remitente: emi,
+                receptor: rep,
+                status: 0,
+                trackingID: ""
+              };
+              const key = this.db.list("encomiendas").push(encomienda).key;
+              this.db.object(`encomiendas/${key}`).update({ trackingID: key });
+              this.message = `Codigo de Tracking ${key}`;
+              let ubicacionGPS = {};
+              if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(pos => {
+                  const {
+                    coords: { latitude: latitud, longitude: longitud }
+                  } = pos;
+                  ubicacionGPS = {
+                    camion: "none",
+                    latitud,
+                    longitud,
+                    lugar: {
+                      lat: latitud,
+                      lon: longitud
+                    }
+                  };
+                  this.db.object(`ubicacionGPS/${key}`).update(ubicacionGPS);
+                });
+              } else {
                 ubicacionGPS = {
                   camion: "none",
-                  latitud,
-                  longitud,
+                  latitud: "",
+                  longitud: "",
                   lugar: {
-                    lat: latitud,
-                    lon: longitud
+                    lat: "",
+                    lon: ""
                   }
                 };
                 this.db.object(`ubicacionGPS/${key}`).update(ubicacionGPS);
-              });
-            } else {
-              ubicacionGPS = {
-                camion: "none",
-                latitud: "",
-                longitud: "",
-                lugar: {
-                  lat: "",
-                  lon: ""
-                }
-              };
-              this.db.object(`ubicacionGPS/${key}`).update(ubicacionGPS);
+              }
             }
+          } else {
+            this.message = "Debe especificar usuarios registrados";
           }
         });
       });

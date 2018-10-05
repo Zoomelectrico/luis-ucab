@@ -7,4 +7,5 @@ div.buttons {
 }
 section.hero {
   background: linear-gradient(0deg, hsl(171, 100%, 41%), hsl(141, 71%, 48%));
+  height: 100vh;
 }

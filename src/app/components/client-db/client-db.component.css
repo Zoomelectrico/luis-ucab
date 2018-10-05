@@ -20,6 +20,6 @@ section {
   border-bottom: 1px #ffffff solid;
   margin-bottom: 1rem;
 }
-span.info:hover {
+span.tag {
   cursor: pointer;
 }
